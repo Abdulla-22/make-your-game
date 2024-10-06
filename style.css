@@ -1,0 +1,231 @@
+
+body {
+    background-image: url("images/bg.gif");
+    color: #ffffff; 
+    font-family: 'Press Start 2P', cursive; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    border: #ffffff7e 0.5px solid;
+    background-color: #42424244;
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.scoreboard {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+.result {
+    font-size: 18px;
+    color: #ffeb3b;
+    margin-bottom: 10px;
+}
+
+.status-bar {
+    display: flex;
+    flex-direction: column; /* Stacks lives and time on different lines */
+    align-items: center; /* Centers the content */
+    margin-top: 10px;
+}
+
+.lives-container,
+.timer-container {
+    margin-bottom: 10px; /* Adds space between lives and time */
+}
+
+/* Optional: Styling for the lives and timer to stand out */
+.lives, .timer {
+    font-size: 16px;
+    color: #ffeb3b;
+}
+
+.game-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    width: 90vmin;
+    height: 90vmin;
+}
+
+.grid div {
+    border: 1px solid transparent;
+}
+
+/* Element Styling */
+.invader, .shooter, .laser, .enemy-laser, .boom {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.invader {
+    background-image: url('images/invader.png');
+}
+
+.shooter {
+    background-image: url('images/shooter.png');
+}
+
+.laser {
+    background-image: url('images/shot.webp');
+}
+
+.enemy-laser {
+    background-image: url('images/invedorLaser.png');
+}
+
+.boom {
+    background-image: url('images/bom.png');
+}
+
+/* Pause Overlay */
+.pause-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 26, 0.9);
+    display: none; 
+    z-index: 20;
+}
+
+.pause-menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.pause-menu h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ffeb3b; 
+}
+
+.pause-menu button {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #424242; 
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.pause-menu button:hover {
+    background-color: #616161; 
+}
+
+/* Info Button */
+.info-container {
+    margin-top: 10px;
+  }
+  
+  .info-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #424242; 
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .info-button:hover {
+    background-color: #616161; 
+  }
+  
+  /* Info Overlay */
+  .info-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 26, 0.9);
+    display: none; /* Hidden by default */
+    z-index: 20;
+  }
+  
+  .info-menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #000000;
+    padding: 20px;
+    border: 2px solid #ffeb3b;
+    color: #ffeb3b;
+    font-family: 'Press Start 2P', cursive;
+  }
+  
+  .info-menu h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .info-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .info-menu li {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .close-info-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #424242; 
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .close-info-button:hover {
+    background-color: #616161;
+  }
+  
+
+  .arrow{
+    border: #ffeb3b solid 2px;
+    padding: 10px;
+  }
+  .hide{
+    color: #00000000;
+  }
+  .fps-display{
+    color: #ffeb3b;
+  }

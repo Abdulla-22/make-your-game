@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Invaders - Retro Mode</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <header class="scoreboard">
+      <div class="fps-display">FPS: 0</div>
+      <h1 class="result">Press Space to Start</h1>
+      <div class="status-bar">
+        <div class="lives-container">
+          <h2 class="lives">Lives: 3</h2>
+        </div>
+        <div class="timer-container">
+          <h2 class="timer">Time: 50</h2>
+        </div>
+        <div class="info-container">
+          <button class="info-button"><i class="fa-solid fa-circle-info"></i></button>
+        </div>
+        
+        <!-- Info Overlay -->
+        <div class="info-overlay">
+          <div class="info-menu">
+            <h2>Controls</h2>
+            <ul>
+              <li><strong><i class="fa-solid fa-arrow-left arrow"></i> : </strong>  Move Left<span class="hide">t</span></li>
+              <li><strong><i class="fa-solid fa-arrow-right arrow"></i> : </strong>Move Right</li>
+              <li><strong>Space:</strong> Shoot</li>
+              <li><strong>Escape:</strong> Pause/Resume</li>
+            </ul>
+            <button class="close-info-button">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </header>
+
+    <section class="game-area">
+      <div class="grid"></div>
+    </section>
+
+    <!-- Pause Overlay -->
+    <div class="pause-overlay">
+      <div class="pause-menu">
+        <h2>Paused</h2>
+        <button class="continue-button">Continue</button>
+        <button class="restart-button">Restart</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="appHandler.js"></script>
+</body>
+</html>
