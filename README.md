@@ -22,7 +22,7 @@ Welcome to **Space Invaders**, a single-player JavaScript game inspired by the c
 3. Enjoy playing the game!
 
 ## Project Structure
-
+```bash
 .
 |-- appHandler.js
 |-- images
@@ -40,7 +40,7 @@ Welcome to **Space Invaders**, a single-player JavaScript game inspired by the c
 |   |-- shoot.wav
 |   `-- win.mp3
 `-- style.css
-
+```
 ## Performance
 
 - This project leverages `requestAnimationFrame` for smooth animations.
