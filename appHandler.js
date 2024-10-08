@@ -10,7 +10,7 @@ const infoButton = document.querySelector(".info-button");
 const infoOverlay = document.querySelector(".info-overlay");
 const closeInfoButton = document.querySelector(".close-info-button");
 const movementCooldown = 100;
-const fpsDisplay = document.querySelector('.fps-display'); // Select the FPS display element
+const fpsDisplay = document.querySelector(".fps-display"); // Select the FPS display element
 
 let frameCount = 0;
 let fps = 0;
@@ -42,7 +42,7 @@ let lastInvaderShootTime = 0;
 let keys = {};
 let totalInvaders;
 let gameOver = false; // Track if the game is over
-let isInfoWindowShowm = false
+let isInfoWindowShowm = false;
 // Create the grid
 for (let i = 0; i < width * width; i++) {
   const square = document.createElement("div");
@@ -53,10 +53,8 @@ const squares = Array.from(document.querySelectorAll(".grid div"));
 // Define the alien invaders
 function createAliens() {
   alienInvaders = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-    15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
-    30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-    45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 30,
+    31, 32, 33, 34, 35, 36, 37, 38, 39, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
     60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
   ];
   totalInvaders = alienInvaders.length;
@@ -93,36 +91,38 @@ function moveShooter() {
   const currentTime = Date.now();
 
   // Check if enough time has passed since the last move
-  if (currentTime - lastMoveTime < movementCooldown) {
-    return; // Prevent movement if cooldown hasn't passed
+  if (currentTime - lastMoveTime >= movementCooldown) {
+    // Update the last move time
+    lastMoveTime = currentTime;
+
+    // Continue with shooter movement
+    removeShooter();
+    if (keys["ArrowLeft"] && currentShooterIndex % width !== 0) {
+      currentShooterIndex -= 1;
+    }
+    if (keys["ArrowRight"] && currentShooterIndex % width < width - 1) {
+      currentShooterIndex += 1;
+    }
+    drawShooter();
   }
 
-  // Update the last move time
-  lastMoveTime = currentTime;
-
-  // Continue with shooter movement
-  removeShooter();
-  if (keys["ArrowLeft"] && currentShooterIndex % width !== 0) {
-    currentShooterIndex -= 1;
+  // Handle shooting
+  if (keys["Space"]) {
+    shootLaser();
   }
-  if (keys["ArrowRight"] && currentShooterIndex % width < width - 1) {
-    currentShooterIndex += 1;
-  }
-  drawShooter();
 }
 
-// Shoot lasers
 function shootLaser() {
   if (isPaused) return; // Do nothing if the game is paused
 
   const currentTime = Date.now();
-  let audio = new Audio('sounds/shoot.wav');
-  audio.play();
+
   // Check if enough time has passed since the last shot
   if (currentTime - lastShotTime < shotCooldown) {
     return; // Prevent shooting if the cooldown hasn't passed
   }
-
+  let audio = new Audio("sounds/shoot.wav");
+  audio.play();
   lastShotTime = currentTime; // Update the last shot time
 
   let currentLaserIndex = currentShooterIndex;
@@ -140,7 +140,7 @@ function shootLaser() {
     if (squares[currentLaserIndex].classList.contains("invader")) {
       squares[currentLaserIndex].classList.remove("laser", "invader");
       squares[currentLaserIndex].classList.add("boom");
-      let audio = new Audio('sounds/invaderkilled.wav');
+      let audio = new Audio("sounds/invaderkilled.wav");
       audio.play();
 
       setTimeout(
@@ -157,9 +157,13 @@ function shootLaser() {
 
       // Check if all invaders are destroyed
       if (aliensRemoved.length === totalInvaders) {
-        resultDisplay.innerHTML = "You Win!";
-        let audio = new Audio('sounds/win.mp3');
-        audio.play();
+        if (lives > 0) {
+          resultDisplay.innerHTML = "You Win!";
+          let audio = new Audio("sounds/win.mp3");
+          audio.play();
+        } else {
+          resultDisplay.innerHTML = "Draw";
+        }
         endGame(true); // Pass true to indicate that the player won
         return;
       }
@@ -205,9 +209,13 @@ function invadersShoot(timestamp) {
         lives--;
         livesDisplay.innerHTML = "Lives: " + lives + " ";
         if (lives <= 0) {
-          resultDisplay.innerHTML = "Game Over";
-          let audio = new Audio('sounds/loser.mp3');
-          audio.play();
+          if (aliensRemoved.length !== totalInvaders) {
+            resultDisplay.innerHTML = "Game Over";
+            let audio = new Audio("sounds/loser.mp3");
+            audio.play();
+          } else {
+            resultDisplay.innerHTML = "Draw";
+          }
           endGame(false); // Pass false to indicate the player lost
           return;
         }
@@ -262,13 +270,15 @@ function moveInvaders(timestamp) {
     }
 
     // Check for game over conditions
-    if (squares[currentShooterIndex].classList.contains("invader", "shooter")) {
+    if (
+      squares[currentShooterIndex].classList.contains("invader", "shooter")
+    ) {
       squares[currentShooterIndex].classList.add("boom");
       lives--;
       livesDisplay.innerHTML = "Lives: " + lives + " ";
       if (lives <= 0) {
         resultDisplay.innerHTML = "Game Over";
-        let audio = new Audio('sounds/loser.mp3');
+        let audio = new Audio("sounds/loser.mp3");
         audio.play();
         endGame(false);
         return;
@@ -288,7 +298,7 @@ function moveInvaders(timestamp) {
 
     if (invadersReachedBottom) {
       resultDisplay.innerHTML = "Game Over";
-      let audio = new Audio('sounds/loser.mp3');
+      let audio = new Audio("sounds/loser.mp3");
       audio.play();
       endGame(false);
       return;
@@ -314,9 +324,9 @@ function moveInvaders(timestamp) {
 function updateTimer() {
   if (isPaused) return; // Do nothing if the game is paused
 
-  const currentTime = Date.now();  // Get the current time in milliseconds
+  const currentTime = Date.now(); // Get the current time in milliseconds
 
-  if (!gameStartTime) gameStartTime = currentTime;  // Set the start time only if it's not already set
+  if (!gameStartTime) gameStartTime = currentTime; // Set the start time only if it's not already set
 
   const elapsedTime = Math.floor((currentTime - gameStartTime) / 1000); // Calculate elapsed time in seconds
   remainingTime = gameTime - elapsedTime;
@@ -326,7 +336,7 @@ function updateTimer() {
   if (remainingTime <= 0) {
     timerDisplay.innerHTML = "Time: 0";
     resultDisplay.innerHTML = "Time Up!";
-    let audio = new Audio('sounds/loser.mp3');
+    let audio = new Audio("sounds/loser.mp3");
     audio.play();
     endGame(false);
   }
@@ -334,7 +344,7 @@ function updateTimer() {
 
 // Start the game
 function startGame() {
-  if (gameStarted || gameOver) return; // Prevent game from starting if it's already started or game is over
+  if (gameStarted || gameOver) return;
   gameStarted = true;
   result = 0;
   lives = 3;
@@ -411,7 +421,7 @@ function resumeGame() {
 function restartGame() {
   // Clear paused state and hide pause overlay
   keys = {}; // Clear the keys object
-  isPaused = false;  // Reset the paused state
+  isPaused = false; // Reset the paused state
   pausedTime = null; // Clear paused time
   pauseOverlay.style.display = "none"; // Hide the pause overlay
 
@@ -460,14 +470,19 @@ function keyDownHandler(e) {
       pauseOverlay.style.display = "block";
     }
   } else if (e.code === "Space") {
-    shootLaser();
+    keys[e.code] = true;
+    e.preventDefault(); // Prevent default scrolling behavior
   } else if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
     keys[e.code] = true;
   }
 }
 
 function keyUpHandler(e) {
-  if (e.code === "ArrowLeft" || e.code === "ArrowRight") {
+  if (
+    e.code === "ArrowLeft" ||
+    e.code === "ArrowRight" ||
+    e.code === "Space"
+  ) {
     keys[e.code] = false;
   }
 }
@@ -546,8 +561,9 @@ function calculateFPS() {
 
   // Update FPS once per second
   const currentTime = Date.now();
-  if (currentTime - lastFpsUpdateTime >= 1000) { // Every second
-    fps = frameCount; // Frames git in the last second
+  if (currentTime - lastFpsUpdateTime >= 1000) {
+    // Every second
+    fps = frameCount; // Frames in the last second
     fpsDisplay.innerHTML = `FPS: ${fps}`;
     frameCount = 0; // Reset the frame count
     lastFpsUpdateTime = currentTime; // Update the last FPS update time

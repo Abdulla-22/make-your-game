@@ -41,6 +41,7 @@ Welcome to **Space Invaders**, a single-player JavaScript game inspired by the c
 |   `-- win.mp3
 `-- style.css
 ```
+
 ## Performance
 
 - This project leverages `requestAnimationFrame` for smooth animations.
